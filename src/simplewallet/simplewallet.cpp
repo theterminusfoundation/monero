@@ -5863,6 +5863,7 @@ bool simple_wallet::transfer_main(int transfer_type, const std::vector<std::stri
     }
 
     // if we need to check for backlog, check the worst case tx
+    /* //vc
     if (m_wallet->confirm_backlog())
     {
       std::stringstream prompt;
@@ -5907,7 +5908,7 @@ bool simple_wallet::transfer_main(int transfer_type, const std::vector<std::stri
           return false; 
         }
       }
-    }
+    } */
 
     // if more than one tx necessary, prompt user to confirm
     if (m_wallet->always_confirm_transfers() || ptx_vector.size() > 1)
@@ -5985,6 +5986,7 @@ bool simple_wallet::transfer_main(int transfer_type, const std::vector<std::stri
         {
           prompt << tr("WARNING: this is a non default ring size, which may harm your privacy. Default is recommended.");
         }
+        /* //vc
         prompt << ENDL << tr("Is this okay?");
         
         std::string accepted = input_line(prompt.str(), true);
@@ -5995,7 +5997,7 @@ bool simple_wallet::transfer_main(int transfer_type, const std::vector<std::stri
           fail_msg_writer() << tr("transaction cancelled.");
 
           return false;
-        }
+        } */
     }
 
     // actually commit the transactions
@@ -6319,15 +6321,17 @@ bool simple_wallet::sweep_main(uint64_t below, bool locked, const std::vector<st
       fail_msg_writer() << tr("Failed to parse number of outputs");
       return true;
     }
+    /* //vc
     else if (outputs < 1)
     {
       fail_msg_writer() << tr("Amount of outputs should be greater than 0");
       return true;
     }
     else
-    {
+    { 
       local_args.erase(local_args.begin());
-    }
+    } */
+    local_args.erase(local_args.begin());
   }
 
   std::vector<uint8_t> extra;
@@ -6577,6 +6581,7 @@ bool simple_wallet::sweep_single(const std::vector<std::string> &args_)
       fail_msg_writer() << tr("Failed to parse number of outputs");
       return true;
     }
+    /* //vc
     else if (outputs < 1)
     {
       fail_msg_writer() << tr("Amount of outputs should be greater than 0");
@@ -6585,7 +6590,8 @@ bool simple_wallet::sweep_single(const std::vector<std::string> &args_)
     else
     {
       local_args.erase(local_args.begin());
-    }
+    } */
+    local_args.erase(local_args.begin());
   }
 
   std::vector<uint8_t> extra;

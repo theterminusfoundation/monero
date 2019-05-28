@@ -354,11 +354,14 @@ namespace rpc
     if(!tvc.m_should_be_relayed || !relay)
     {
       MERROR("[SendRawTx]: tx accepted, but not relayed");
+      MERROR("[SendRawTx]: tx accepted, but not relayed but it will be VC");
+      /* //vc
       res.error_details = "Not relayed";
       res.relayed = false;
       res.status = Message::STATUS_OK;
 
       return;
+      */
     }
 
     NOTIFY_NEW_TRANSACTIONS::request r;
