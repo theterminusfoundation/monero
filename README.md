@@ -1,3 +1,66 @@
+# Terminus Foundation
+
+## Setup instructions
+
+### Install Dependencies
+
+The same as [monerod](#dependencies).
+For ubuntu 16.04 64bit (it works also on the 18.04):
+
+> sudo apt update && sudo apt install build-essential cmake pkg-config libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev
+
+### Configuring network:
+Monerod will be bound to localhost (for security reasons) thus will talk with other nodes through ssh tunnels.
+
+As a convention the ports used are related to nodes e.g. node#1 has 30010 for the p2p port, 30011 for the RPC calls, 30012 for zmq-rpc, 30014 for the rpc-wallet; node#2 respectively 30020, 30021, 30022, 30024, node#23 30230, 30231, 30232, 30234, …
+
+Each node must have a tunnel towards all the others nodes, for convenience a tunnel can be created inside a screen window.
+
+For example, with a network of 3 nodes, for the node#1:
+
+From #1 to #2
+
+>1. screen  -S tunnel-to-node-02 (create a window named 'tunnel-to-node-02')
+>2. ssh -i ~/ubuntu1804.key -L 30010:localhost:30010 ubuntu@ip-node#2 (creating a tunnel to node#2)
+>3. Ctrl+a + ctrl+d (detach from the screen window)
+
+From #1 to #3
+
+>1. screen  -S tunnel-to-node-03 (create a window named 'tunnel-to-node-03')
+>2. ssh -i ~/ubuntu1804.key -L 30020:localhost:30020 ubuntu@ip-node#3 (creating a tunnel to node#3)
+>3. Ctrl+a + ctrl+d (detach from the screen window)
+
+Do the same for node#2 and node#3.
+
+To list all the newly created window type:
+
+> screen –list 
+
+Reattaching to a window (e.g. tunnel-to-node02) type:
+
+> screen –r tunnel-to-node-02
+
+### Launching the blockchain:
+
+>1. Clone the [scripts files](https://github.com/theterminusfoundation/scripts) into the bin folder
+>2. Copy/modify the ports (the bindings and the add-exclusive) of the script node-vc-1 according the node number
+>3. screen –S monerod-vc-1
+>4. ./node-vc-1.sh
+>5. Ctrl+a + ctrl+d
+
+### Launching the server-wallet-rpc:
+
+>1. Copy/modify the ports(the bindings and the add-exclusive) of the script start-server-wallet-rpc according the node number
+>2. screen –S server-wallet
+>3. ./start-server-wallet-rpc.sh
+>4. Ctrl+a + ctrl+d
+
+
+Go to /bin and by using the shell scripts start creating wallets, mining blocks, transfering tokens, check balance, height...
+
+Reference rpc wallet calls: https://www.getmonero.org/resources/developer-guides/wallet-rpc.html
+
+
 # Monero
 
 Copyright (c) 2014-2019 The Monero Project.   
